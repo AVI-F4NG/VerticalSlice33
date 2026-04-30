@@ -7770,6 +7770,7 @@ GameObject:
   - component: {fileID: 1891430522}
   - component: {fileID: 1891430521}
   - component: {fileID: 1891430529}
+  - component: {fileID: 1891430530}
   - component: {fileID: 1891430520}
   - component: {fileID: 1891430524}
   - component: {fileID: 1891430523}
@@ -8048,6 +8049,18 @@ MonoBehaviour:
     _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
     _objectReferences:
     - {fileID: 11400000, guid: 3ba2a2362a16ab940bd90491386d078c, type: 2}
+--- !u!114 &1891430530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891430519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5d51f5ac69b84046b1c71c21d972fac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1950403517
 GameObject:
   m_ObjectHideFlags: 0
