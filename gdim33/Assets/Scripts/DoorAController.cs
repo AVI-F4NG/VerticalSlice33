@@ -6,7 +6,7 @@ public class DoorAController : MonoBehaviour
     [SerializeField] private DoorAPasswordUI passwordUI;
     [SerializeField] private GameObject lockedVisual;
     [SerializeField] private Collider2D blockingCollider;
-    [SerializeField] private string nextSceneName = "MaintenanceRoom";
+    [SerializeField] private string nextSceneName = "Room3";
 
     private void Start()
     {
@@ -15,6 +15,8 @@ public class DoorAController : MonoBehaviour
 
     public void Interact()
     {
+        Debug.Log($"DoorA Interact: GameSession.doorAUnlocked={GameSession.doorAUnlocked}");
+
         if (GameSession.doorAUnlocked)
         {
             SceneManager.LoadScene(nextSceneName);
@@ -23,12 +25,6 @@ public class DoorAController : MonoBehaviour
 
         if (passwordUI != null)
             passwordUI.OpenPanel();
-    }
-
-    public void UnlockDoor()
-    {
-        GameSession.doorAUnlocked = true;
-        RefreshLockedState();
     }
 
     public void UnlockDoorSilently()

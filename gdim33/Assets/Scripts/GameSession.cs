@@ -5,6 +5,8 @@ public static class GameSession
     public static bool usbFound;
     public static bool doorAUnlocked;
     public static bool hasFinalClearance;
+    public static bool hasKeyCard2;
+
     public static bool monitorSequenceStarted;
     public static bool computerLockedAfterUSBUse;
 
@@ -13,8 +15,11 @@ public static class GameSession
         usbFound = false;
         doorAUnlocked = false;
         hasFinalClearance = false;
+        hasKeyCard2 = false;
+
         monitorSequenceStarted = false;
         computerLockedAfterUSBUse = false;
+
         hasInitialized = true;
     }
 }

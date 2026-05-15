@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public sealed class ProximityInteractUI2D : MonoBehaviour
 {
@@ -16,84 +17,128 @@ public sealed class ProximityInteractUI2D : MonoBehaviour
 
     private void Awake()
     {
-        if (player == null)
-        {
-            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-            if (playerObject != null)
-            {
-                player = playerObject.transform;
-            }
-        }
+        CachePlayer();
 
         if (uiCanvasRoot != null)
-        {
             uiCanvasRoot.SetActive(false);
-        }
+
+        isUIOpen = false;
+        UIKeyboardLock.Unlock();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        ForceCloseAndReset();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        CachePlayer();
+        ForceCloseAndReset();
     }
 
     private void Update()
     {
-        if (player == null || uiCanvasRoot == null)
-        {
+        if (player == null)
+            CachePlayer();
+
+        SyncOpenState();
+
+        if (player == null)
             return;
-        }
 
         if (isUIOpen)
         {
             if (Input.GetKeyDown(closeKey))
-            {
                 CloseUI();
-            }
 
             return;
         }
 
         bool isPlayerInRange = Vector2.Distance(player.position, transform.position) <= interactionRadius;
 
-        if (isPlayerInRange && !UIKeyboardLock.IsLocked && Input.GetKeyDown(interactKey))
-        {
+        if (!isPlayerInRange)
+            return;
+
+        // Only block interaction if another UI is really holding the lock.
+        if (UIKeyboardLock.IsLocked)
+            return;
+
+        if (Input.GetKeyDown(interactKey))
             OpenUI();
+    }
+
+    private void CachePlayer()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+            player = playerObject.transform;
+    }
+
+    private void SyncOpenState()
+    {
+        if (computerUI != null)
+        {
+            isUIOpen = computerUI.IsOpen;
+            return;
         }
+
+        if (uiCanvasRoot != null)
+            isUIOpen = uiCanvasRoot.activeInHierarchy;
+        else
+            isUIOpen = false;
     }
 
     private void OpenUI()
     {
-        isUIOpen = true;
+        bool opened = false;
 
         if (computerUI != null)
         {
-            computerUI.OpenScreen();
+            opened = computerUI.OpenScreen();
         }
-        else
+        else if (uiCanvasRoot != null)
         {
             uiCanvasRoot.SetActive(true);
+            opened = uiCanvasRoot.activeInHierarchy;
         }
 
-        UIKeyboardLock.Lock();
+        isUIOpen = opened;
+
+        if (opened)
+            UIKeyboardLock.Lock();
     }
 
     private void CloseUI()
     {
-        isUIOpen = false;
-
         if (computerUI != null)
         {
             computerUI.CloseImmediate();
         }
-        else
+        else if (uiCanvasRoot != null)
         {
             uiCanvasRoot.SetActive(false);
         }
 
+        isUIOpen = false;
         UIKeyboardLock.Unlock();
     }
 
-    private void OnDisable()
+    private void ForceCloseAndReset()
     {
-        if (isUIOpen)
-        {
-            CloseUI();
-        }
+        if (computerUI != null)
+            computerUI.CloseImmediate();
+        else if (uiCanvasRoot != null)
+            uiCanvasRoot.SetActive(false);
+
+        isUIOpen = false;
+        UIKeyboardLock.Unlock();
     }
 
     private void OnDrawGizmosSelected()

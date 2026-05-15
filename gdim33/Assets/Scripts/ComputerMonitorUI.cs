@@ -33,10 +33,10 @@ public class ComputerMonitorUI : MonoBehaviour
             monitorSequence.BeginLoop();
     }
 
-    public void OpenScreen()
+    public bool OpenScreen()
     {
-        if (IsOpen || IsInteractionLocked)
-            return;
+        if (IsOpen || IsInteractionLocked || screenRoot == null)
+            return false;
 
         IsOpen = true;
         ejectChanged = false;
@@ -44,8 +44,7 @@ public class ComputerMonitorUI : MonoBehaviour
         if (ejectButtonLabel != null)
             ejectButtonLabel.text = "[EJECT DISK]";
 
-        if (screenRoot != null)
-            screenRoot.SetActive(true);
+        screenRoot.SetActive(true);
 
         if (flowerHintPanel != null)
             flowerHintPanel.SetActive(false);
@@ -53,10 +52,10 @@ public class ComputerMonitorUI : MonoBehaviour
         if (wildFlashOverlay != null)
             wildFlashOverlay.gameObject.SetActive(false);
 
-        Debug.Log($"ComputerMonitorUI: usbFound={GameSession.usbFound}");
-
         if (virusPanel != null)
             virusPanel.SetActive(GameSession.usbFound);
+
+        return true;
     }
 
     public void OpenFlowerHint()

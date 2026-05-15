@@ -1,31 +1,30 @@
 using UnityEngine;
 
-public class USBPickup : MonoBehaviour
+public class KeyCard2Pickup : MonoBehaviour
 {
     [TextArea]
-    [SerializeField] private string pickupMessage = "A USB stick, maybe I can try using it on the computer?";
+    [SerializeField] private string pickupMessage = "A higher-clearance key card.";
 
     private void Start()
     {
-        if (GameSession.usbFound)
-        {
+        if (GameSession.hasKeyCard2)
             gameObject.SetActive(false);
-        }
     }
 
     public void Interact()
     {
-        if (GameSession.usbFound)
+        if (GameSession.hasKeyCard2)
         {
             gameObject.SetActive(false);
             return;
         }
 
-        GameSession.usbFound = true;
+        GameSession.hasKeyCard2 = true;
+        GameSession.hasFinalClearance = true;
 
         if (LocalHUD.Instance != null)
         {
-            LocalHUD.Instance.SetUSBVisible(true);
+            LocalHUD.Instance.SetKeyCard2Visible(true);
             LocalHUD.Instance.ShowMessage(pickupMessage, 3f);
         }
 

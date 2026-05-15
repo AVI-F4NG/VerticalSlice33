@@ -7,6 +7,7 @@ public sealed class LocalHUD : MonoBehaviour
     public static LocalHUD Instance { get; private set; }
 
     [SerializeField] private GameObject usbIcon;
+    [SerializeField] private GameObject keyCard2Icon;
     [SerializeField] private GameObject messageRoot;
     [SerializeField] private TMP_Text messageText;
 
@@ -15,18 +16,15 @@ public sealed class LocalHUD : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Debug.Log($"LocalHUD Awake on {gameObject.name}");
 
         if (messageRoot != null)
             messageRoot.SetActive(false);
-        else
-            Debug.LogWarning("LocalHUD: messageRoot is missing.");
     }
 
     private void Start()
     {
-        Debug.Log($"LocalHUD Start. usbFound={GameSession.usbFound}");
         SetUSBVisible(GameSession.usbFound);
+        SetKeyCard2Visible(GameSession.hasKeyCard2);
     }
 
     private void OnDestroy()
@@ -37,15 +35,14 @@ public sealed class LocalHUD : MonoBehaviour
 
     public void SetUSBVisible(bool visible)
     {
-        if (usbIcon == null)
-        {
-            Debug.LogError("LocalHUD: usbIcon is missing.");
-            return;
-        }
+        if (usbIcon != null)
+            usbIcon.SetActive(visible);
+    }
 
-        Debug.Log($"LocalHUD.SetUSBVisible({visible}) on {usbIcon.name}");
-        usbIcon.SetActive(visible);
-        Debug.Log($"usbIcon activeSelf={usbIcon.activeSelf}, activeInHierarchy={usbIcon.activeInHierarchy}");
+    public void SetKeyCard2Visible(bool visible)
+    {
+        if (keyCard2Icon != null)
+            keyCard2Icon.SetActive(visible);
     }
 
     public void ShowMessage(string message, float seconds)
@@ -60,8 +57,6 @@ public sealed class LocalHUD : MonoBehaviour
     {
         if (messageText != null)
             messageText.text = message;
-        else
-            Debug.LogWarning("LocalHUD: messageText is missing.");
 
         if (messageRoot != null)
             messageRoot.SetActive(true);
