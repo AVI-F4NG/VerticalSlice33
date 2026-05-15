@@ -4,7 +4,17 @@ using UnityEngine;
 
 public sealed class LocalHUD : MonoBehaviour
 {
-    public static LocalHUD Instance { get; private set; }
+    private static LocalHUD instance;
+    public static LocalHUD Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindFirstObjectByType<LocalHUD>();
+
+            return instance;
+        }
+    }
 
     [SerializeField] private GameObject usbIcon;
     [SerializeField] private GameObject keyCard2Icon;
@@ -15,22 +25,32 @@ public sealed class LocalHUD : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        instance = this;
 
         if (messageRoot != null)
             messageRoot.SetActive(false);
     }
 
+    private void OnEnable()
+    {
+        RefreshProgressIcons();
+    }
+
     private void Start()
     {
-        SetUSBVisible(GameSession.usbFound);
-        SetKeyCard2Visible(GameSession.hasKeyCard2);
+        RefreshProgressIcons();
     }
 
     private void OnDestroy()
     {
-        if (Instance == this)
-            Instance = null;
+        if (instance == this)
+            instance = null;
+    }
+
+    public void RefreshProgressIcons()
+    {
+        SetUSBVisible(GameSession.usbFound);
+        SetKeyCard2Visible(GameSession.hasKeyCard2);
     }
 
     public void SetUSBVisible(bool visible)

@@ -22,10 +22,11 @@ public class KeyCard2Pickup : MonoBehaviour
         GameSession.hasKeyCard2 = true;
         GameSession.hasFinalClearance = true;
 
-        if (LocalHUD.Instance != null)
+        LocalHUD hud = LocalHUD.Instance;
+        if (hud != null)
         {
-            LocalHUD.Instance.SetKeyCard2Visible(true);
-            LocalHUD.Instance.ShowMessage(pickupMessage, 3f);
+            hud.SetKeyCard2Visible(true);
+            hud.ShowMessage(pickupMessage, 3f);
         }
 
         gameObject.SetActive(false);
