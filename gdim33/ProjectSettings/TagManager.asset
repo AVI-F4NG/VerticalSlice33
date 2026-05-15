@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Keycard1
+  - Door
+  - InteractionPrompt
   layers:
   - Default
   - TransparentFX
