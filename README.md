@@ -68,6 +68,8 @@ The Shader Graph creates an animated CRT glitch by using the UV node as the spri
 <img width="3394" height="1508" alt="Screenshot 2026-05-24 183052" src="https://github.com/user-attachments/assets/d8294418-39e2-4a23-b35f-cf8097a8ebf0" />
 *Second Half*
 <img width="2797" height="1809" alt="Screenshot 2026-05-24 183116" src="https://github.com/user-attachments/assets/288458f1-591c-49be-b2f5-63a32be7f6b7" />
+*Blackboard Variables*
+<img width="456" height="929" alt="Screenshot 2026-05-24 185120" src="https://github.com/user-attachments/assets/de07a554-b3dc-42d7-8c30-4648d4a79ecf" />
 
 ### Question 2
 I have addressed these issues: 
