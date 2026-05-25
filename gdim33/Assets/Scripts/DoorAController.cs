@@ -7,6 +7,7 @@ public class DoorAController : MonoBehaviour
     [SerializeField] private GameObject lockedVisual;
     [SerializeField] private Collider2D blockingCollider;
     [SerializeField] private string nextSceneName = "Room3";
+    [SerializeField] private GameObject enterableObject;
 
     private void Start()
     {
@@ -34,6 +35,14 @@ public class DoorAController : MonoBehaviour
 
         if (lockedVisual != null)
             lockedVisual.SetActive(false);
+
+        SetEnterableObjectActive(true);
+    }
+
+    public void SetEnterableObjectActive(bool value)
+    {
+        if (enterableObject != null)
+            enterableObject.SetActive(value);
     }
 
     private void RefreshLockedState()
@@ -49,5 +58,7 @@ public class DoorAController : MonoBehaviour
 
         if (lockedVisual != null)
             lockedVisual.SetActive(true);
+
+        SetEnterableObjectActive(false);
     }
 }

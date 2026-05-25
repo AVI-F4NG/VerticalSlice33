@@ -15,6 +15,11 @@ public class DoorBController : MonoBehaviour
     [SerializeField] private string lockedMessage = "Requires higher clearance key";
     [SerializeField] private float messageDuration = 3f;
 
+    [Header("Enterable Object")]
+    [SerializeField] private GameObject enterableObject;
+
+    private bool isUnlocked;
+
     private void Start()
     {
         RefreshState();
@@ -38,16 +43,26 @@ public class DoorBController : MonoBehaviour
 
     public void UnlockDoorSilently()
     {
+        isUnlocked = true;
+
         if (blockingCollider != null)
             blockingCollider.enabled = false;
 
         if (lockedVisual != null)
             lockedVisual.SetActive(false);
+
+        SetEnterableObjectActive(true);
+    }
+
+    public void SetEnterableObjectActive(bool value)
+    {
+        if (enterableObject != null)
+            enterableObject.SetActive(value);
     }
 
     private void RefreshState()
     {
-        if (GameSession.hasKeyCard2)
+        if (isUnlocked)
         {
             UnlockDoorSilently();
             return;
@@ -58,5 +73,7 @@ public class DoorBController : MonoBehaviour
 
         if (lockedVisual != null)
             lockedVisual.SetActive(true);
+
+        SetEnterableObjectActive(false);
     }
 }

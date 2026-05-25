@@ -9,11 +9,14 @@ public class DoorAPasswordUI : MonoBehaviour
     [SerializeField] private string correctCode = "1234";
     [SerializeField] private DoorAController doorController;
     [SerializeField] private KeyCode closeKey = KeyCode.Escape;
+    [SerializeField] private float successDelay = 0.6f;
 
     private string currentEntry = "";
     private bool evaluating;
     private bool success;
     private bool isOpen;
+
+    public bool IsOpen => isOpen;
 
     private void Start()
     {
@@ -59,7 +62,6 @@ public class DoorAPasswordUI : MonoBehaviour
         if (success)
         {
             GameSession.doorAUnlocked = true;
-            Debug.Log("Door A unlocked: GameSession.doorAUnlocked = true");
 
             if (doorController != null)
                 doorController.UnlockDoorSilently();
@@ -91,6 +93,10 @@ public class DoorAPasswordUI : MonoBehaviour
 
             if (entryText != null)
                 entryText.text = "SUCCESS";
+
+            yield return new WaitForSeconds(successDelay);
+
+            ClosePanel();
         }
         else
         {

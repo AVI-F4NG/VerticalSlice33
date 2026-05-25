@@ -19,18 +19,49 @@ public class ComputerMonitorUI : MonoBehaviour
     [SerializeField] private float wildFlashDuration = 0.6f;
     [SerializeField] private float wildFlashInterval = 0.06f;
 
+    [Header("World Screen Visual Change")]
+    [SerializeField] private SpriteRenderer screenSpriteRenderer;
+    [SerializeField] private Sprite changedScreenSprite;
+    [SerializeField] private Material changedScreenMaterial;
+
     private bool ejectChanged;
     private bool continueRoutineRunning;
 
+    private Sprite originalScreenSprite;
+    private Material originalScreenMaterial;
+    private Vector3 originalLocalScale;
+    private bool cachedOriginalVisualState;
+
     public bool IsOpen { get; private set; }
     public bool IsInteractionLocked => GameSession.computerLockedAfterUSBUse;
+
+    private void Awake()
+    {
+        CacheOriginalVisualState();
+    }
 
     private void Start()
     {
         CloseImmediate();
 
-        if (GameSession.monitorSequenceStarted && monitorSequence != null)
-            monitorSequence.BeginLoop();
+        if (GameSession.monitorSequenceStarted)
+        {
+            ApplyPostVirusScreenVisual();
+
+            if (monitorSequence != null)
+                monitorSequence.BeginLoop();
+        }
+    }
+
+    private void CacheOriginalVisualState()
+    {
+        if (cachedOriginalVisualState || screenSpriteRenderer == null)
+            return;
+
+        originalScreenSprite = screenSpriteRenderer.sprite;
+        originalScreenMaterial = screenSpriteRenderer.sharedMaterial;
+        originalLocalScale = screenSpriteRenderer.transform.localScale;
+        cachedOriginalVisualState = true;
     }
 
     public bool OpenScreen()
@@ -101,6 +132,7 @@ public class ComputerMonitorUI : MonoBehaviour
         yield return StartCoroutine(WildFlashRoutine());
 
         CloseImmediate();
+        ApplyPostVirusScreenVisual();
 
         if (monitorSequence != null)
             monitorSequence.BeginLoop();
@@ -125,6 +157,38 @@ public class ComputerMonitorUI : MonoBehaviour
         }
 
         wildFlashOverlay.gameObject.SetActive(false);
+    }
+
+    private void ApplyPostVirusScreenVisual()
+    {
+        if (screenSpriteRenderer == null || changedScreenSprite == null)
+            return;
+
+        CacheOriginalVisualState();
+
+        // Swap material first if desired
+        if (changedScreenMaterial != null)
+            screenSpriteRenderer.material = changedScreenMaterial;
+        else if (originalScreenMaterial != null)
+            screenSpriteRenderer.material = originalScreenMaterial;
+
+        // Compute exact scale ratio from sprite bounds
+        Vector3 targetScale = originalLocalScale;
+
+        Bounds originalBounds = originalScreenSprite.bounds;
+        Bounds changedBounds = changedScreenSprite.bounds;
+
+        if (changedBounds.size.x != 0f)
+            targetScale.x = originalLocalScale.x * (originalBounds.size.x / changedBounds.size.x);
+
+        if (changedBounds.size.y != 0f)
+            targetScale.y = originalLocalScale.y * (originalBounds.size.y / changedBounds.size.y);
+
+        // Keep original Z scale
+        targetScale.z = originalLocalScale.z;
+
+        screenSpriteRenderer.sprite = changedScreenSprite;
+        screenSpriteRenderer.transform.localScale = targetScale;
     }
 
     public void CloseImmediate()
