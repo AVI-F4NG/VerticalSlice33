@@ -63,12 +63,19 @@ The Unity system I used is the tilemap system. It is used to display the environ
 The Shader Graph creates an animated CRT glitch by using the UV node as the sprite texture coordinates, sending it into a Split node, using Split G / UV.y to generate horizontal bands, multiplying that value by _GlitchBands, passing it through Floor to make discrete band IDs, combining that with animated shader time from the Time node, multiplying Time by _GlitchSpeed, adding it to the band ID, passing the result through Sine, and multiplying by _GlitchStrength to produce a horizontal glitch offset; that offset is packed with Combine as (X = glitch offset, Y = 0) and added to the original UV with an Add node to create GlitchedUV, which is then used by three Sample Texture 2D nodes because Sample Texture 2D can sample a texture using supplied UV coordinates. The graph creates RGB splitting by sampling the same _MainTex three times with GlitchedUV + RGBOffset for red, GlitchedUV for green, and GlitchedUV - RGBOffset for blue, then uses three Split nodes and one Combine node to rebuild the final color from RedSample.R, GreenSample.G, and BlueSample.B. It adds scanlines by taking UV.y, multiplying by _ScanlineCount, passing through Sine, normalizing with Add and Multiply, then using One Minus and Lerp with _ScanlineIntensity to create a brightness multiplier that is multiplied into the RGB-split color. Finally, it adds flicker with another Time - Multiply - Sine - Add - Multiply chain, uses One Minus, Add, and Lerp with _FlickerIntensity to create a whole-screen brightness multiplier, multiplies that into the scanned color, then connect the result to Base Color so the effect changes the fragment color.
 
 *Entire Graph*
+
 <img width="3814" height="1541" alt="Screenshot 2026-05-24 182814" src="https://github.com/user-attachments/assets/f90eee65-69e2-4d31-9021-bec9a8726bbd" />
+
 *First Half*
+
 <img width="3394" height="1508" alt="Screenshot 2026-05-24 183052" src="https://github.com/user-attachments/assets/d8294418-39e2-4a23-b35f-cf8097a8ebf0" />
+
 *Second Half*
+
 <img width="2797" height="1809" alt="Screenshot 2026-05-24 183116" src="https://github.com/user-attachments/assets/288458f1-591c-49be-b2f5-63a32be7f6b7" />
+
 *Blackboard Variables*
+
 <img width="456" height="929" alt="Screenshot 2026-05-24 185120" src="https://github.com/user-attachments/assets/de07a554-b3dc-42d7-8c30-4648d4a79ecf" />
 
 ### Question 2
