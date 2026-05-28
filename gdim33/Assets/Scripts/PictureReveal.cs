@@ -5,9 +5,10 @@ public class PictureReveal : MonoBehaviour
     [SerializeField] private Transform pictureTransform;
     [SerializeField] private Vector3 revealedLocalPosition;
     [SerializeField] private GameObject usbObject;
+    [SerializeField] private string pictureMessage;
 
     private Vector3 hiddenLocalPosition;
-    private bool revealed;
+    public bool revealed;
 
     private void Awake()
     {

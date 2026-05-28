@@ -115,7 +115,7 @@ public sealed class ProximityInteractUI2D : MonoBehaviour
             UIKeyboardLock.Lock();
     }
 
-    private void CloseUI()
+    public void CloseUI()
     {
         if (computerUI != null)
         {

@@ -6,7 +6,7 @@ public class DoorAPasswordUI : MonoBehaviour
 {
     [SerializeField] private GameObject panelRoot;
     [SerializeField] private TMP_Text entryText;
-    [SerializeField] private string correctCode = "1234";
+    [SerializeField] private string correctCode = "1305";
     [SerializeField] private DoorAController doorController;
     [SerializeField] private KeyCode closeKey = KeyCode.Escape;
     [SerializeField] private float successDelay = 0.6f;
@@ -83,6 +83,17 @@ public class DoorAPasswordUI : MonoBehaviour
             StartCoroutine(EvaluateEntry());
     }
 
+    public void DeleteDigit()
+    {
+        if (!isOpen || evaluating || success) return;
+        if (currentEntry.Length >= 4 || currentEntry.Length < 1) return;
+
+        currentEntry = currentEntry.Substring(0, currentEntry.Length - 1); 
+
+        if (entryText != null)
+            entryText.text = currentEntry;
+    }
+
     private IEnumerator EvaluateEntry()
     {
         evaluating = true;
@@ -101,7 +112,7 @@ public class DoorAPasswordUI : MonoBehaviour
         else
         {
             if (entryText != null)
-                entryText.text = "<color=\"red\">FAILURE</color>";
+                entryText.text = "<color=\"red\">ERROR</color>";
 
             yield return new WaitForSeconds(2f);
 

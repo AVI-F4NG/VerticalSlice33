@@ -73,7 +73,7 @@ public class ComputerMonitorUI : MonoBehaviour
         ejectChanged = false;
 
         if (ejectButtonLabel != null)
-            ejectButtonLabel.text = "[EJECT DISK]";
+            ejectButtonLabel.text = "Eject Disk";
 
         screenRoot.SetActive(true);
 
@@ -114,7 +114,7 @@ public class ComputerMonitorUI : MonoBehaviour
             ejectChanged = true;
 
             if (ejectButtonLabel != null)
-                ejectButtonLabel.text = "[CONTINUE!]";
+                ejectButtonLabel.text = "CONTINUE!";
 
             return;
         }

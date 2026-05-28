@@ -10,6 +10,12 @@ public sealed class ProximityInteractCall2D : MonoBehaviour
     [SerializeField] private float interactionRadius = 2f;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
 
+    [Header("Picture Interaction")]
+    [SerializeField] private bool isPictureInteract;
+    [SerializeField] private string pictureMessage = "This picture looks suspicious...";
+    [SerializeField] private PictureReveal pictureReveal;
+    
+
     private void Awake()
     {
         if (player == null)
@@ -30,6 +36,14 @@ public sealed class ProximityInteractCall2D : MonoBehaviour
         if (isPlayerInRange && Input.GetKeyDown(interactKey))
         {
             interactTarget.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
+        }
+
+        if (isPlayerInRange && isPictureInteract && !pictureReveal.revealed)
+        {
+            if (LocalHUD.Instance != null)
+            {
+                LocalHUD.Instance.ShowMessage(pictureMessage, 3f);
+            }
         }
     }
 

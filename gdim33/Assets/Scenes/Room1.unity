@@ -616,7 +616,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 66476009}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1554263304}
+        m_TargetAssemblyTypeName: ProximityInteractUI2D, Assembly-CSharp
+        m_MethodName: CloseUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &66476009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4296,8 +4308,8 @@ Transform:
   m_GameObject: {fileID: 597875591}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.23, y: -5.94, z: 0}
-  m_LocalScale: {x: 0.9303206, y: 0.9303206, z: 0.9303206}
+  m_LocalPosition: {x: 9.1406, y: -6.0294, z: 0}
+  m_LocalScale: {x: 0.7515477, y: 0.7515477, z: 0.7515477}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
