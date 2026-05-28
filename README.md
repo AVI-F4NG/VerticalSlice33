@@ -85,6 +85,8 @@ I have addressed these issues:
 - **The password entry screen should disappear automatically after a successful entry:** implemented auto-disable after success
 - **The player teleports to outside the map if the player is on a location in room3 that correponds to a point that is outside the wall in room2, causing the player to be permanently stuck and can only get unstuck by restarting the game:** added fixed-location teleporters so the player could only go back to room2 by using the teleporter that is placed on the correct spot, preventing them to teleport to spaces outside the wall
 - **The character glitches when touching the walls:** fixed; added detection for 2+ keys pressed and collision, and added a cooldown between animation clip changes if these states are detected
+- **Cannot delete digit if entered the wrong digit halfway:** Added "delete" and "quit" buttons to the password entry screen
+- **"Strange painting" is ambiguous:** Added a prompt to the "strange picture" whenever the player is close to it, so the player will know that it's interactable.
 
 ### Question 3
 Finished the maze at the final room (room3) and moved the final key card to the end of the room, and created teleporters for the ease of travelling back to the origin point (and back to room2), and deleted any placeholder "esc to quit" logic. I tried the idea in the original pitch but it's difficult to create colliders detecting if the player stepped on a directional path without blocking their way; also it's hard for the player to tell if they've stepped on a directional path or not, so I changed over to a maze with nodes and paths.
