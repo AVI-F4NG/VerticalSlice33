@@ -3494,7 +3494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: aaaaaaaaaaaaaaaaaaaaaaaaaa
+  m_text: A normal key card.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 16c808a81ca473b49b939b4d8f9ae75b, type: 2}
   m_sharedMaterial: {fileID: 6003164847576374506, guid: 16c808a81ca473b49b939b4d8f9ae75b, type: 2}
@@ -3503,8 +3503,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287639552
-  m_fontColor: {r: 0, g: 0.18867935, b: 0.5660378, a: 1}
+    rgba: 4278648576
+  m_fontColor: {r: 0, g: 1, b: 0.02448988, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3747,7 +3747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8113208, g: 0.92399997, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4416,7 +4416,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press E to interact
+  m_text: Press E to open door
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 16c808a81ca473b49b939b4d8f9ae75b, type: 2}
   m_sharedMaterial: {fileID: 6003164847576374506, guid: 16c808a81ca473b49b939b4d8f9ae75b, type: 2}
@@ -9919,7 +9919,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1321622073
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10141,7 +10141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1466293722
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11935,6 +11935,7 @@ MonoBehaviour:
       UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"InteractionPrompt","value":{"$content":4,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.GameObject,
       UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"KeycardImage","value":{"$content":5,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.GameObject,
       UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Player","value":{"$content":6,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.GameObject,
+      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"},{"name":"Message","value":{"$content":7,"$type":"UnityEngine.Object"},"typeHandle":{"Identification":"UnityEngine.GameObject,
       UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences:
     - {fileID: 597875591}
@@ -11944,6 +11945,7 @@ MonoBehaviour:
     - {fileID: 625059253}
     - {fileID: 1206939324}
     - {fileID: 1891430519}
+    - {fileID: 465666782}
 --- !u!114 &1891430525
 MonoBehaviour:
   m_ObjectHideFlags: 0
