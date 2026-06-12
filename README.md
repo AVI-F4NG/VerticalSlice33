@@ -102,3 +102,4 @@ Final Devlog goes here.
 - [Computer booting SFX](https://pixabay.com/sound-effects/household-switch-click-and-beep-001a-11602/)
 - [Interaction beep](https://pixabay.com/sound-effects/technology-beep-104060/)
 - [Glitch SFX](https://pixabay.com/sound-effects/film-special-effects-glitchy-sound-374839/)
+- [Footsteps](https://pixabay.com/sound-effects/film-special-effects-footsteps-male-362053/)
