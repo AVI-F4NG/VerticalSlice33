@@ -42,7 +42,7 @@ This complicating gameplay feature combines the Room 2 progression logic with th
 
 ### Question 2
 
-Yes, the task breakdowns were helpful because they turned a complicated feature into smaller parts that could be built and tested one at a time. For this milestone, the Room 2 plus monitor-flash system involved several connected pieces—revealing the USB, updating the HUD, changing the computer’s behavior, triggering the monitor sequence, and then using that clue for the password door—so writing the work in steps made it easier to focus on one part at a time instead of trying to finish the whole chain at once. It also helped identify where a problem was coming from, because each step had a more specific expected result.
+Yes, the task breakdowns were helpful because they turned a complicated feature into smaller parts that could be built and tested one at a time. For this milestone, the Room 2 plus monitor-flash system involved several connected pieces -- revealing the USB, updating the HUD, changing the computer’s behavior, triggering the monitor sequence, and then using that clue for the password door -- so writing the work in steps made it easier to focus on one part at a time instead of trying to finish the whole chain at once. It also helped identify where a problem was coming from, because each step had a more specific expected result.
 
 At the same time, I would improve my breakdowns by making them even more concrete about dependencies between systems and how scene changes affect references and state. Some of the hardest issues came from interactions between UI, object references, and scene loading, not just from the feature logic itself. If I were to do the breakdown again, I would be more explicit about which parts should stay scene-local, which values should persist only as data, and which test should happen immediately after each setup step. That would make the breakdown more useful not just for building the feature, but also for avoiding architecture problems earlier.
 
@@ -91,9 +91,43 @@ I have addressed these issues:
 ### Question 3
 Finished the maze at the final room (room3) and moved the final key card to the end of the room, and created teleporters for the ease of travelling back to the origin point (and back to room2), and deleted any placeholder "esc to quit" logic. I tried the idea in the original pitch but it's difficult to create colliders detecting if the player stepped on a directional path without blocking their way; also it's hard for the player to tell if they've stepped on a directional path or not, so I changed over to a maze with nodes and paths.
 
-## Milestone 4 Devlog
-Milestone 4 Devlog goes here.
 ## Final Devlog
-Final Devlog goes here.
+### Question 1
+The core gameplay loop is built around exploring rooms, investigating suspicious objects, collecting key items, and using those discoveries to unlock new spaces. The player moves through connected rooms, presses E to interact with clue objects and systems, picks up important items like key cards and the USB, and uses environmental information to solve progression puzzles. The main content in the current game includes the office room, lounge, and maintenance room, along with the computer clue chain, flower vase key card discovery, hidden USB reveal behind the picture, virus-triggered monitor flash sequence, keypad password door, maze, and the final stairway escape.
+
+This matches the original Vertical Slice plan because it gives the player a small but complete version of the intended full-game experience. Instead of trying to include every possible feature, the current build demonstrates the main identity of the game: a creepy futuristic facility where rooms are interconnected, clues carry across spaces, and progression comes from observation, system interaction, and cross-room puzzle chaining rather than isolated mini-games. In that sense, the implemented gameplay shows what the full game would feel like on a larger scale: exploring unsettling industrial rooms, uncovering hidden logic in the environment, and escaping by understanding how the facility’s systems connect to each other.
+
+### Question 2
+The rendering effect is activated directly from the computer’s gameplay state in ComputerMonitorUI.cs. When the player clicks Continue on the virus prompt, OnContinuePressed() starts the ContinueRoutine() coroutine; that routine sets progression flags (GameSession.computerLockedAfterUSBUse and GameSession.monitorSequenceStarted), runs the temporary full-screen flash effect through WildFlashRoutine(), closes the UI, and then calls ApplyPostVirusScreenVisual(). That method is the point where the world-space monitor rendering actually changes: it targets a SpriteRenderer, swaps its material to changedScreenMaterial (the custom Shader Graph-driven material), swaps its sprite to changedScreenSprite, and computes a corrected localScale from the original and replacement sprite bounds so the screen keeps the same apparent size after the sprite change. The script also caches the original sprite, material, and scale in Awake() through CacheOriginalVisualState(), and in Start() it checks GameSession.monitorSequenceStarted so the post-virus material/sprite state is reapplied automatically if the player returns later, rather than only appearing during the initial trigger. 
+
+### Question 3
+My process is to start by identifying the core player loop. I first define what the player is doing most often -- moving, interacting, picking up items -- and treat those as the game’s core mechanics. Then I break the project into major systems, such as player control, interaction, UI, puzzle logic, progression tracking, scene flow, and audio/visual feedback. After that, I break each system into smaller implementable parts: specific mechanics, then specific scripts/classes, then the methods and data each class is responsible for, plus how those classes communicate. In practice, this means moving from a high-level design idea to concrete pieces like controllers, managers, triggers, UI handlers, and helper methods.
+
+One important part of this process is that it helps reveal the real scope of the project. At the top-level design stage, a mechanic can sound simple, but once it is broken into systems and then into classes and methods, extra supporting functions usually appear -- things like state checks, helper methods, transitions, references, feedback systems, and edge-case handling. That is useful because it makes the hidden workload visible early. My current plan, then, is to keep using the breakdown-bubble map as both a design tool and a scope-checking tool: define the core mechanics, separate them into systems, reduce those systems into concrete technical tasks, and then continuously playtest on the intended platform instead of relying only on the game engine view, since that is the real player experience.
+
+#### Question 3.1
+I think bubble break-downs are more helpful, because they allow me to see the class/method/variable relationships more clearly at an early stage -- it helps a lot with understanding the overall requirements for the intended game mechanic part.
+
+#### Question 3.2
+It usually makes the project feel larger, because once I break a big feature into smaller steps, I start seeing the hidden support work -- extra systems, helper methods, edge cases, and dependencies -- that were not obvious at the top level. That gives me a more realistic understanding of the actual scope.
+
+#### Question 3.3
+It relates closely to how I built the Vertical Slice, because the project worked best when I treated it as a set of smaller connected systems instead of one large “escape room game” idea. Breaking the game down into player movement, interaction, UI, item progression, computer behavior, and room transitions made it easier to build and test each part separately. At the same time, the process also showed me where my planning was weaker: some features sounded simple at first, but once I implemented them, I found extra dependencies between scenes, UI, and progression logic that made the scope larger than expected. That is something I would improve in the future by doing an even more detailed technical breakdown earlier, especially for systems that connect multiple rooms or multiple mechanics.
+
+
 ## Open-source assets
-- Cite any external assets used here!
+### Environment
+- Decorations / computer screens: [computer gibber](https://opengameart.org/content/computer-gibber-inspection-panels-stairs-transition-elements)
+- Environment: [futuristic industrial tileset](https://opengameart.org/content/futuristic-industrial-technical-tileset)
+- Environment / decorations: [industrial tiles](https://opengameart.org/content/industrial-tiles)
+
+### Sound Effects
+- [Office Sound Effect](https://pixabay.com/sound-effects/film-special-effects-generator-large-01-31429/) by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=31429">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=31429">Pixabay</a>
+- [Lounge Sound Effect](https://pixabay.com/sound-effects/film-special-effects-ventilation-ambience-sound-362606/) by <a href="https://pixabay.com/users/alex_jauk-16800354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=362606">Alexander Jauk</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=362606">Pixabay</a>
+- [Maintenance Room Sound Effect](https://pixabay.com/sound-effects/technology-industrial-machine-cycle-73890/) by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=73890">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=73890">Pixabay</a>
+- [Computer booting SFX](https://pixabay.com/sound-effects/household-switch-click-and-beep-001a-11602/)
+- [Interaction click](https://pixabay.com/sound-effects/film-special-effects-click-345983/)
+- [Glitch SFX](https://pixabay.com/sound-effects/film-special-effects-glitchy-sound-374839/)
+- [Footsteps](https://pixabay.com/sound-effects/film-special-effects-footsteps-male-362053/)
+- [Error SFX](https://pixabay.com/sound-effects/film-special-effects-ui-error-pop-515668/)
+- [Success SFX](https://pixabay.com/sound-effects/film-special-effects-success2-57646/)
