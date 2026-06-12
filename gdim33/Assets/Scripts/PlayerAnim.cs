@@ -33,6 +33,8 @@ public class PlayerAnim : MonoBehaviour
     private int walkLeftHash;
     private int walkRightHash;
 
+    private bool footstepsPlaying;
+
     private void Reset()
     {
         animator = GetComponent<Animator>();
@@ -67,6 +69,7 @@ public class PlayerAnim : MonoBehaviour
         Vector2 delta = new Vector2(delta3.x, delta3.y);
 
         UpdateAnimation(delta);
+        UpdateFootsteps(delta);
 
         lastPosition = watchedTransform.position;
     }
@@ -126,6 +129,24 @@ public class PlayerAnim : MonoBehaviour
         }
     }
 
+    private void UpdateFootsteps(Vector2 delta)
+    {
+        bool isMoving = delta.sqrMagnitude > moveThreshold;
+
+        if (isMoving && !footstepsPlaying)
+        {
+            SFXManager.StartFootstepsLoop();
+            footstepsPlaying = true;
+            return;
+        }
+
+        if (!isMoving && footstepsPlaying)
+        {
+            SFXManager.StopFootstepsLoop();
+            footstepsPlaying = false;
+        }
+    }
+
     private int GetCandidateState(Vector2 delta, float ax, float ay)
     {
         if (ax > ay)
@@ -165,5 +186,14 @@ public class PlayerAnim : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         collisionContacts = Mathf.Max(0, collisionContacts - 1);
+    }
+
+    private void OnDisable()
+    {
+        if (footstepsPlaying)
+        {
+            SFXManager.StopFootstepsLoop();
+            footstepsPlaying = false;
+        }
     }
 }

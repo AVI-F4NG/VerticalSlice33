@@ -45,8 +45,10 @@ public class Teleporter : MonoBehaviour
                 LocalHUD.Instance.HideMessage();
         }
 
-        if (inRange && Input.GetKeyDown(interactKey))
+        if (inRange && Input.GetKeyDown(interactKey)){
+            SFXManager.PlayBeep();
             TeleportPlayer();
+        }
 
         wasInRange = inRange;
     }

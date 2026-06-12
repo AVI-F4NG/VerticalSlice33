@@ -104,7 +104,10 @@ public class ComputerMonitorUI : MonoBehaviour
     public void OnContinuePressed()
     {
         if (!continueRoutineRunning)
+        {
+            SFXManager.StartGlitchLoop();
             StartCoroutine(ContinueRoutine());
+        }
     }
 
     public void OnEjectPressed()

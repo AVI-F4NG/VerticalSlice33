@@ -102,6 +102,7 @@ public sealed class ProximityInteractUI2D : MonoBehaviour
         if (computerUI != null)
         {
             opened = computerUI.OpenScreen();
+            SFXManager.PlayClickBeep();
         }
         else if (uiCanvasRoot != null)
         {
@@ -114,6 +115,7 @@ public sealed class ProximityInteractUI2D : MonoBehaviour
         if (opened)
             UIKeyboardLock.Lock();
     }
+    
 
     public void CloseUI()
     {

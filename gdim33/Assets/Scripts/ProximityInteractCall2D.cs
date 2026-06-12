@@ -35,8 +35,10 @@ public sealed class ProximityInteractCall2D : MonoBehaviour
 
         if (isPlayerInRange && Input.GetKeyDown(interactKey))
         {
+            SFXManager.PlayBeep();
             interactTarget.SendMessage("Interact", SendMessageOptions.DontRequireReceiver);
         }
+        
 
         if (isPlayerInRange && isPictureInteract && !pictureReveal.revealed)
         {

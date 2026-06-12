@@ -74,6 +74,8 @@ public class DoorAPasswordUI : MonoBehaviour
         if (string.IsNullOrEmpty(digit) || digit.Length != 1) return;
         if (currentEntry.Length >= 4) return;
 
+        SFXManager.PlayBeep();
+
         currentEntry += digit;
 
         if (entryText != null)
@@ -102,8 +104,10 @@ public class DoorAPasswordUI : MonoBehaviour
         {
             success = true;
 
-            if (entryText != null)
+            if (entryText != null){
+                SFXManager.PlaySuccess();
                 entryText.text = "SUCCESS";
+            }
 
             yield return new WaitForSeconds(successDelay);
 
@@ -111,8 +115,10 @@ public class DoorAPasswordUI : MonoBehaviour
         }
         else
         {
-            if (entryText != null)
+            if (entryText != null){
+                SFXManager.PlayError();
                 entryText.text = "<color=\"red\">ERROR</color>";
+            }
 
             yield return new WaitForSeconds(2f);
 
