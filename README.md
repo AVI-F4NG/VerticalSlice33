@@ -91,15 +91,25 @@ I have addressed these issues:
 ### Question 3
 Finished the maze at the final room (room3) and moved the final key card to the end of the room, and created teleporters for the ease of travelling back to the origin point (and back to room2), and deleted any placeholder "esc to quit" logic. I tried the idea in the original pitch but it's difficult to create colliders detecting if the player stepped on a directional path without blocking their way; also it's hard for the player to tell if they've stepped on a directional path or not, so I changed over to a maze with nodes and paths.
 
-## Milestone 4 Devlog
-Milestone 4 Devlog goes here.
 ## Final Devlog
-Final Devlog goes here.
+### Question 1
+The core gameplay loop is built around exploring rooms, investigating suspicious objects, collecting key items, and using those discoveries to unlock new spaces. The player moves through connected rooms, presses E to interact with clue objects and systems, picks up important items like key cards and the USB, and uses environmental information to solve progression puzzles. The main content in the current game includes the office room, lounge, and maintenance room, along with the computer clue chain, flower vase key card discovery, hidden USB reveal behind the picture, virus-triggered monitor flash sequence, keypad password door, maze, and the final stairway escape.
+
+This matches the original Vertical Slice plan because it gives the player a small but complete version of the intended full-game experience. Instead of trying to include every possible feature, the current build demonstrates the main identity of the game: a creepy futuristic facility where rooms are interconnected, clues carry across spaces, and progression comes from observation, system interaction, and cross-room puzzle chaining rather than isolated mini-games. In that sense, the implemented gameplay shows what the full game would feel like on a larger scale: exploring unsettling industrial rooms, uncovering hidden logic in the environment, and escaping by understanding how the facility’s systems connect to each other.
+
+### Question 2
+The rendering effect is activated directly from the computer’s gameplay state in ComputerMonitorUI.cs. When the player clicks Continue on the virus prompt, OnContinuePressed() starts the ContinueRoutine() coroutine; that routine sets progression flags (GameSession.computerLockedAfterUSBUse and GameSession.monitorSequenceStarted), runs the temporary full-screen flash effect through WildFlashRoutine(), closes the UI, and then calls ApplyPostVirusScreenVisual(). That method is the point where the world-space monitor rendering actually changes: it targets a SpriteRenderer, swaps its material to changedScreenMaterial (the custom Shader Graph-driven material), swaps its sprite to changedScreenSprite, and computes a corrected localScale from the original and replacement sprite bounds so the screen keeps the same apparent size after the sprite change. The script also caches the original sprite, material, and scale in Awake() through CacheOriginalVisualState(), and in Start() it checks GameSession.monitorSequenceStarted so the post-virus material/sprite state is reapplied automatically if the player returns later, rather than only appearing during the initial trigger. 
+
+### Question 3
+
+
 ## Open-source assets
 - [Office Sound Effect](https://pixabay.com/sound-effects/film-special-effects-generator-large-01-31429/) by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=31429">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=31429">Pixabay</a>
 - [Lounge Sound Effect](https://pixabay.com/sound-effects/film-special-effects-ventilation-ambience-sound-362606/) by <a href="https://pixabay.com/users/alex_jauk-16800354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=362606">Alexander Jauk</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=362606">Pixabay</a>
 - [Maintenance Room Sound Effect](https://pixabay.com/sound-effects/technology-industrial-machine-cycle-73890/) by <a href="https://pixabay.com/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=73890">freesound_community</a> from <a href="https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=73890">Pixabay</a>
 - [Computer booting SFX](https://pixabay.com/sound-effects/household-switch-click-and-beep-001a-11602/)
-- [Interaction beep](https://pixabay.com/sound-effects/technology-beep-104060/)
+- [Interaction click](https://pixabay.com/sound-effects/film-special-effects-click-345983/)
 - [Glitch SFX](https://pixabay.com/sound-effects/film-special-effects-glitchy-sound-374839/)
 - [Footsteps](https://pixabay.com/sound-effects/film-special-effects-footsteps-male-362053/)
+- [Error SFX](https://pixabay.com/sound-effects/film-special-effects-ui-error-pop-515668/)
+- [Success SFX](https://pixabay.com/sound-effects/film-special-effects-success2-57646/)
