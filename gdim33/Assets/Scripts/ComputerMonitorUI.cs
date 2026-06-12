@@ -47,10 +47,16 @@ public class ComputerMonitorUI : MonoBehaviour
         if (GameSession.monitorSequenceStarted)
         {
             ApplyPostVirusScreenVisual();
+            SFXManager.StartGlitchLoop();
 
             if (monitorSequence != null)
                 monitorSequence.BeginLoop();
         }
+    }
+
+    private void OnDisable()
+    {
+        SFXManager.StopGlitchLoop();
     }
 
     private void CacheOriginalVisualState()
@@ -169,13 +175,11 @@ public class ComputerMonitorUI : MonoBehaviour
 
         CacheOriginalVisualState();
 
-        // Swap material first if desired
         if (changedScreenMaterial != null)
             screenSpriteRenderer.material = changedScreenMaterial;
         else if (originalScreenMaterial != null)
             screenSpriteRenderer.material = originalScreenMaterial;
 
-        // Compute exact scale ratio from sprite bounds
         Vector3 targetScale = originalLocalScale;
 
         Bounds originalBounds = originalScreenSprite.bounds;
@@ -187,7 +191,6 @@ public class ComputerMonitorUI : MonoBehaviour
         if (changedBounds.size.y != 0f)
             targetScale.y = originalLocalScale.y * (originalBounds.size.y / changedBounds.size.y);
 
-        // Keep original Z scale
         targetScale.z = originalLocalScale.z;
 
         screenSpriteRenderer.sprite = changedScreenSprite;
